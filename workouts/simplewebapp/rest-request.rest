@@ -17,3 +17,13 @@ content-type: application/json
     "content": "VS Code REST Client",
     "important": false
 }
+
+
+###
+POST http://localhost:3001/api/notes
+content-type: application/json
+
+{
+    "content": "Trying to be true",
+    "important": true
+}
