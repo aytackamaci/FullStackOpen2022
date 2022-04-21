@@ -11,3 +11,12 @@ content-type: application/json
     "name": "Aytac Kamaci",
     "number": "551-219-8005"
 }
+
+###
+PUT https://phonebookfs2022.herokuapp.com/api/persons/626056763bd40e0e7b8bc3d4
+content-type: application/json
+
+{
+    "name": "Aytac Kamacos",
+    "number": "551-8005"
+}
