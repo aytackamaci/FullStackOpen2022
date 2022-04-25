@@ -22,19 +22,22 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model('Note', noteSchema)
 
 const note = new Note({
-  content: 'My first Mongo note',
+  content: 'CSS is hard',
   date: new Date(),
-  important: true,
+  important: false,
 })
 
-note.save().then(() => {
-  console.log('note saved!')
+// eslint-disable-next-line no-constant-condition
+if (false) {
+  note.save().then(() => {
+    console.log('note saved!')
+    mongoose.connection.close()
+  })
+}
+
+Note.find({}).then((result) => {
+  result.forEach((note) => {
+    console.log(note)
+  })
   mongoose.connection.close()
 })
-
-/*Note.find({}).then((result) => {
-  result.forEach((note) => {
-    console.log(note);
-  });
-  mongoose.connection.close();
-});*/
