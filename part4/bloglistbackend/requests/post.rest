@@ -30,3 +30,14 @@ content-type: application/json
   "url": "zurna",
   "likes": 35
 }
+
+####
+PUT http://localhost:3001/api/blogs/627d181cf22ee8bec9aefb67
+content-type: application/json
+
+{
+  "title": "HTML is easy",
+  "author": "Aytac Kamaci",
+  "url": "aa.com.rr.ds",
+  "likes": 45
+}
