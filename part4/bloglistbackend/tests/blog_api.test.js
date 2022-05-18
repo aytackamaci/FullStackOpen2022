@@ -24,15 +24,18 @@ test('identifier property of the blog posts is named id', async () => {
 })
 
 test('a valid blog can be added', async () => {
+  const user = await helper.createLoginAuthenticate()
+
   const newBlog = {
     title: 'Full Stack 2022 is fun',
     author: 'Aytac Kamaci',
     url: 'aa.com.rr.bb',
+    userId: user.body.id,
     likes: 8,
   }
-
   await api
     .post('/api/blogs')
+    .set('Authorization', 'bearer ' + user.body.token)
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
@@ -45,14 +48,18 @@ test('a valid blog can be added', async () => {
 })
 
 test('if likes property misses it defaults to 0', async () => {
+  const user = await helper.createLoginAuthenticate()
+
   const newBlog = {
     title: 'Full Stack 2022 is not a game',
     author: 'Aytac Kamacos',
     url: 'aa.com.rr.bb',
+    userId: user.body.id,
   }
 
   await api
     .post('/api/blogs')
+    .set('Authorization', 'bearer ' + user.body.token)
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
@@ -65,23 +72,60 @@ test('if likes property misses it defaults to 0', async () => {
 })
 
 test('if title or url properties are missing it returns error', async () => {
+  const user = await helper.createLoginAuthenticate()
+
   const newBlog = {
     title: 'Full Stack 2022 is not a game',
     author: 'Aytac Kamacos',
+    userId: user.body.id,
   }
 
-  await api.post('/api/blogs').send(newBlog).expect(400)
+  await api
+    .post('/api/blogs')
+    .set('Authorization', 'bearer ' + user.body.token)
+    .send(newBlog)
+    .expect(400)
+})
+
+test('no token returns 401 unauthorized', async () => {
+  const user = await helper.createLoginAuthenticate()
+
+  const newBlog = {
+    title: 'Full Stack 2022 is not a game',
+    author: 'Aytac Kamacos',
+    userId: user.body.id,
+  }
+
+  await api.post('/api/blogs').send(newBlog).expect(401)
 })
 
 test('deletion succeeds with status code 204 if id is valid', async () => {
-  const blogsAtStart = await helper.blogsInDb()
-  const blogToDelete = blogsAtStart[0]
+  const user = await helper.createLoginAuthenticate()
+  const newBlog = {
+    title: 'Full Stack 2022 is fun',
+    author: 'Aytac Kamaci',
+    url: 'aa.com.rr.bb',
+    userId: user.body.id,
+    likes: 8,
+  }
+  await api
+    .post('/api/blogs')
+    .set('Authorization', 'bearer ' + user.body.token)
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
 
-  await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204)
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToDelete = blogsAtStart[2]
+
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .set('Authorization', 'bearer ' + user.body.token)
+    .expect(204)
 
   const blogsAtEnd = await helper.blogsInDb()
 
-  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 
   const contents = blogsAtEnd.map((r) => r.title)
 

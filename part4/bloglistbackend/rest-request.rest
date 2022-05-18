@@ -1,0 +1,95 @@
+GET http://localhost:3001/api/notes
+
+###
+POST http://localhost:3001/api/notes/ HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+###
+POST http://localhost:3001/api/notes
+content-type: application/json
+
+{
+    "content": "VS Code REST Client",
+    "important": false
+}
+
+
+###
+POST http://localhost:3001/api/notes
+content-type: application/json
+
+{
+    "content": "Trying to be true",
+    "important": true,
+    "userId": "627eb48c4644c84889d7ed01"
+}
+
+
+###
+POST http://localhost:3001/api/notes
+content-type: application/json
+
+{
+    "content": "created with user 2",
+    "important": true,
+    "userId": "627eb48c4644c84889d7ed01"
+}
+
+###
+POST http://localhost:3001/api/users
+content-type: application/json
+
+{
+      "username": "aytackamaci",
+      "name": "Aytac Kamaci",
+      "password": "123456"
+}
+
+###
+POST http://localhost:3001/api/login
+content-type: application/json
+
+{
+      "username": "aytackama",
+      "password": "123456"
+}
+
+###
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF5dGFja2FtYSIsImlkIjoiNjI4NTBiYzU0YzA2ZTg4ZmQyOTU3NWEzIiwiaWF0IjoxNjUyOTA4NDc5fQ.L1V7Ac-AjygEocKxaLsJOpOEnIqZDkyBxuRTepPEVfc
+
+{
+    "url": "cabcurl2asdasd",
+    "title": "truedataa",
+    "userId": "62850bc54e06e98fd29475a3",
+    "author": "Aytac Kamacosa",
+    "likes": 100
+}
+
+
+###
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "url": "cabcurl",
+    "title": "true",
+    "userId": "62850bc54c06e88fd29575a3",
+    "author": "Aytac Kamacos",
+    "likes": 100
+}
+
+###
+DELETE http://localhost:3001/api/blogs/628565e78f6e190e73c97b09
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF5dGFja2FtYSIsImlkIjoiNjI4NTBiYzU0YzA2ZTg4ZmQyOTU3NWEzIiwiaWF0IjoxNjUyOTA4NDc5fQ.L1V7Ac-AjygEocKxaLsJOpOEnIqZDkyBxuRTepPEVfc
+
+{
+    "userId": "62850bc54c06e88fd29575a3"
+}
