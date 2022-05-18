@@ -25,5 +25,46 @@ content-type: application/json
 
 {
     "content": "Trying to be true",
+    "important": true,
+    "userId": "627eb48c4644c84889d7ed01"
+}
+
+
+###
+POST http://localhost:3001/api/notes
+content-type: application/json
+
+{
+    "content": "created with user 2",
+    "important": true,
+    "userId": "627eb48c4644c84889d7ed01"
+}
+
+###
+POST http://localhost:3001/api/users
+content-type: application/json
+
+{
+      "username": "aytackama",
+      "name": "Aytac Kamaci",
+      "password": "123456"
+}
+
+###
+POST http://localhost:3001/api/login
+content-type: application/json
+
+{
+      "username": "aytackama",
+      "password": "123456"
+}
+
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF5dGFja2FtYSIsImlkIjoiNjI4NGZhYTA3MWIyMjM0YWI0MTIwNzlkIiwiaWF0IjoxNjUyODgzMjc3fQ.piw5jPmcXO99T_YIC_4ZNYzfsM2M6s8g9-cKdyKB4y0
+
+{
+    "content": "created with user token",
     "important": true
 }

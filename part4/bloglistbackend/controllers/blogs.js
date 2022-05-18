@@ -15,6 +15,7 @@ blogsRouter.post('/', async (request, response) => {
     url: body.url,
     likes: body.likes || 0,
   })
+
   if (!body.title || !body.url) {
     response.status(400).json({ error: 'content missing' })
   } else {
