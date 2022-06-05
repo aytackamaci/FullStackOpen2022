@@ -23,6 +23,7 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
     response.status(400).json({ error: 'content missing' })
   } else {
     const savedBlog = await blog.save()
+    savedBlog.populate('user', { username: 1, name: 1 })
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
     response.status(201).json(savedBlog)
@@ -46,15 +47,19 @@ blogsRouter.delete(
 
 blogsRouter.put('/:id', async (request, response) => {
   const body = request.body
+
   const blog = {
     title: body.title,
     author: body.author,
     url: body.url,
     likes: body.likes,
+    user: body.user.id,
   }
+
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
     new: true,
-  })
+  }).populate('user')
+
   response.status(200).json(updatedBlog)
 })
 

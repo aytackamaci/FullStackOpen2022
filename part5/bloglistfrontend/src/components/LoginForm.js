@@ -1,25 +1,30 @@
-import React, { useCallback } from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
-const LoginForm = ({
-  username,
-  password,
-  handleLogin,
-  onNameChange,
-  onPasswordChange,
-}) => {
-  const handleNameInputChange = useCallback(
-    (event) => {
-      onNameChange(event.target.value)
-    },
-    [onNameChange]
-  )
+const LoginForm = ({ loginUser }) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-  const handlePasswordInputChange = useCallback(
-    (event) => {
-      onPasswordChange(event.target.value)
-    },
-    [onPasswordChange]
-  )
+  const handleNameChange = (event) => {
+    setUsername(event.target.value)
+  }
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+  }
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+
+    loginUser({
+      username,
+      password,
+    })
+
+    setUsername('')
+    setPassword('')
+  }
+
   return (
     <form onSubmit={handleLogin}>
       <h2>log in to application</h2>
@@ -29,7 +34,7 @@ const LoginForm = ({
           type="text"
           value={username}
           name="Username"
-          onChange={handleNameInputChange}
+          onChange={handleNameChange}
         />
       </div>
       <div>
@@ -38,12 +43,16 @@ const LoginForm = ({
           type="password"
           value={password}
           name="Password"
-          onChange={handlePasswordInputChange}
+          onChange={handlePasswordChange}
         />
       </div>
       <button type="submit">login</button>
     </form>
   )
+}
+
+LoginForm.propTypes = {
+  loginUser: PropTypes.func.isRequired,
 }
 
 export default LoginForm

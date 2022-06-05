@@ -1,34 +1,34 @@
-import React, { useCallback } from 'react'
+import { useState } from 'react'
 
-const BlogForm = ({
-  title,
-  author,
-  url,
-  addBlog,
-  onTitleChange,
-  onAuthorChange,
-  onUrlChange,
-}) => {
-  const handleTitleInputChange = useCallback(
-    (event) => {
-      onTitleChange(event.target.value)
-    },
-    [onTitleChange]
-  )
+const BlogForm = ({ createBlog }) => {
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
-  const handleAuthorInputChange = useCallback(
-    (event) => {
-      onAuthorChange(event.target.value)
-    },
-    [onAuthorChange]
-  )
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value)
+  }
 
-  const handleUrlInputChange = useCallback(
-    (event) => {
-      onUrlChange(event.target.value)
-    },
-    [onUrlChange]
-  )
+  const handleAuthorChange = (event) => {
+    setAuthor(event.target.value)
+  }
+
+  const handleUrlChange = (event) => {
+    setUrl(event.target.value)
+  }
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    createBlog({
+      author: author,
+      title: title,
+      url: url,
+    })
+
+    setTitle('')
+    setAuthor('')
+    setUrl('')
+  }
 
   return (
     <form onSubmit={addBlog}>
@@ -39,7 +39,7 @@ const BlogForm = ({
           type="text"
           value={title}
           name="Title"
-          onChange={handleTitleInputChange}
+          onChange={handleTitleChange}
         />
       </div>
       <div>
@@ -48,17 +48,12 @@ const BlogForm = ({
           type="text"
           value={author}
           name="Author"
-          onChange={handleAuthorInputChange}
+          onChange={handleAuthorChange}
         />
       </div>
       <div>
         url
-        <input
-          type="text"
-          value={url}
-          name="Url"
-          onChange={handleUrlInputChange}
-        />
+        <input type="text" value={url} name="Url" onChange={handleUrlChange} />
       </div>
       <button type="submit">create</button>
     </form>
