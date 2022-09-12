@@ -1,13 +1,15 @@
 import NewNote from './reducers/NewNote'
 import Notes from './reducers/Notes'
+import VisibilityFilter from './components/VisibilityFilter'
 
-const AppReducer = () => {
+const App = () => {
   return (
     <div>
       <NewNote />
+      <VisibilityFilter />
       <Notes />
     </div>
   )
 }
 
-export default AppReducer
+export default App
