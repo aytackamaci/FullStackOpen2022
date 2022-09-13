@@ -20,8 +20,6 @@ const asObject = (anecdote) => {
 }
 
 const initialState = anecdotesAtStart.map(asObject)
-console.log(initialState)
-console.log(Array.isArray(initialState))
 
 const anecdoteSlice = createSlice({
   name: 'anecdotes',
