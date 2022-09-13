@@ -21,6 +21,7 @@ const Notes = () => {
       : notes.filter((note) => !note.important)
   })
 
+
   return (
     <ul>
       {notes.map((note) => (
