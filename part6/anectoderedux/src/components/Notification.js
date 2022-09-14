@@ -5,14 +5,16 @@ const Notification = () => {
     return notification
   })
 
-  console.log(notification)
-
   const style = {
     border: 'solid',
     padding: 10,
     borderWidth: 1,
   }
-  return <div style={style}>{notification}</div>
+  return notification[0].visibility ? (
+    <div style={style}>{notification[0].message}</div>
+  ) : (
+    ''
+  )
 }
 
 export default Notification
