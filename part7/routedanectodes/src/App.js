@@ -158,9 +158,9 @@ const App = () => {
     setAnecdotes(anecdotes.concat(anecdote))
   }
 
-  const anecdoteById = (id) => anecdotes.find((a) => a.id === id)
+  //const anecdoteById = (id) => anecdotes.find((a) => a.id === id)
 
-  const vote = (id) => {
+  /*const vote = (id) => {
     const anecdote = anecdoteById(id)
 
     const voted = {
@@ -169,7 +169,8 @@ const App = () => {
     }
 
     setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)))
-  }
+  }*/
+
   const showNotification = (content) => {
     setNotification(`a new anecdote ${content} created`)
     setTimeout(() => {
