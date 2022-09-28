@@ -1,8 +1,5 @@
 import { useState } from 'react'
-import ReactDOM from 'react-dom/client'
-
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Link,
@@ -183,8 +180,8 @@ const App = () => {
   const showNotification = (content) => {
     setNotification(`a new anecdote ${content} created`)
     setTimeout(() => {
-      setNotification('');
-    }, 5000);
+      setNotification('')
+    }, 5000)
   }
   const match = useMatch('/anecdotes/:id')
 
