@@ -6,7 +6,6 @@ const blogSlice = createSlice({
   initialState: [],
   reducers: {
     like(state, action) {
-      console.log(state)
       const id = action.payload
       const blogToChange = state.find((n) => n.id === id)
       const likedBlog = {

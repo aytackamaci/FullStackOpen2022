@@ -1,9 +1,17 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import BlogList from './BlogList'
+import BlogForm from './BlogForm'
+import {
+  loginUser,
+  initializeLogin,
+  logoutUser,
+} from '../reducers/loginReducer'
 
-const LoginForm = ({ loginUser }) => {
+const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
 
   const handleNameChange = (event) => {
     setUsername(event.target.value)
@@ -13,46 +21,61 @@ const LoginForm = ({ loginUser }) => {
     setPassword(event.target.value)
   }
 
-  const handleLogin = async (event) => {
+  useEffect(() => {
+    dispatch(initializeLogin())
+  }, [dispatch])
+  const user = useSelector(({ login }) => {
+    return login[0]
+  })
+
+  const handleLogin = (event) => {
     event.preventDefault()
-
-    loginUser({
-      username,
-      password,
-    })
-
+    dispatch(loginUser(username, password))
     setUsername('')
     setPassword('')
   }
 
+  const handleLogout = async (event) => {
+    event.preventDefault()
+    dispatch(logoutUser())
+  }
   return (
-    <form onSubmit={handleLogin}>
-      <h2>log in to application</h2>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={handleNameChange}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={handlePasswordChange}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
+    <div>
+      {user === null ? (
+        <form onSubmit={handleLogin}>
+          <h2>log in to application</h2>
+          <div>
+            username
+            <input
+              type="text"
+              value={username}
+              name="Username"
+              onChange={handleNameChange}
+            />
+          </div>
+          <div>
+            password
+            <input
+              type="password"
+              value={password}
+              name="Password"
+              onChange={handlePasswordChange}
+            />
+          </div>
+          <button type="submit">login</button>
+        </form>
+      ) : (
+        <div>
+          {user.name} logged-in
+          <button type="submit" onClick={handleLogout}>
+            logout
+          </button>
+          <BlogForm />
+          <BlogList />
+        </div>
+      )}
+    </div>
   )
-}
-
-LoginForm.propTypes = {
-  loginUser: PropTypes.func.isRequired,
 }
 
 export default LoginForm
