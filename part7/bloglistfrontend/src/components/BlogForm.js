@@ -22,19 +22,6 @@ const BlogForm = () => {
     setUrl(event.target.value)
   }
 
-  /*const addBlog = (event) => {
-    event.preventDefault()
-    createBlog({
-      author: author,
-      title: title,
-      url: url,
-    })
-
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-  }*/
-
   const addBlog = async (event) => {
     event.preventDefault()
     dispatch(
@@ -51,12 +38,6 @@ const BlogForm = () => {
   }
 
   const blogFormRef = useRef()
-
-  //const blogForm = () => (
-  //<Togglable buttonLabel="new blog" ref={blogFormRef}>
-  //<BlogForm /*createBlog={addBlog}*/ />
-  //</Togglable>
-  //)
 
   return (
     <Togglable buttonLabel="new blog" ref={blogFormRef}>

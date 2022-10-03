@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { saveLikes, deleteBlog } from '../reducers/blogReducer'
 
-const Blog = ({ user, blog /*, likeBlog, id, user, deleteBlog*/ }) => {
+const Blog = ({ user, blog }) => {
   const [visualForm, setVisualForm] = useState(true)
   const dispatch = useDispatch()
 
@@ -12,17 +12,6 @@ const Blog = ({ user, blog /*, likeBlog, id, user, deleteBlog*/ }) => {
   const toggleForm = () => {
     setVisualForm(!visualForm)
   }
-
-  /*const handleLike = () => {
-    const changedBlog = { ...blog, likes: blog.likes + 1 }
-    likeBlog(changedBlog, id)
-  }*/
-
-  /*const handleDelete = () => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-      deleteBlog(id, user)
-    }
-  }*/
 
   const showDelete = blog.user.id.toString() === user.toString()
 
