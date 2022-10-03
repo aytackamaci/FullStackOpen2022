@@ -1,20 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
 import Blog from './components/Blog'
-//import Notification from './components/Notification'
-import RNotification from './components/RNotification'
+import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import { setNotification } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  //const [notificationMessage, setNotificationMessage] = useState([null, 0])
+  const [notificationMessage, setNotificationMessage] = useState([null, 0])
   const [user, setUser] = useState(null)
-  const dispatch = useDispatch()
 
   useEffect(() => {
     blogService
@@ -36,21 +32,14 @@ const App = () => {
   const addBlog = (blogObject) => {
     blogService.create(blogObject).then((returnedBlog) => {
       setBlogs(blogs.concat(returnedBlog))
-      /*setNotificationMessage([
+      setNotificationMessage([
         `A new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
         1,
-      ])*/
-      dispatch(
-        setNotification([
-          `A new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
-          5,
-          1,
-        ])
-      )
+      ])
       blogFormRef.current.toggleVisibility()
-      /*setTimeout(() => {
+      setTimeout(() => {
         setNotificationMessage([null, 0])
-      }, 5000)*/
+      }, 5000)
     })
   }
 
@@ -72,11 +61,10 @@ const App = () => {
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
       setUser(user)
     } catch (exception) {
-      /*setNotificationMessage(['Wrong credentials', 3])
+      setNotificationMessage(['Wrong credentials', 3])
       setTimeout(() => {
         setNotificationMessage([null, 0])
-      }, 5000)*/
-      dispatch(setNotification(['Wrong credentials', 5, 3]))
+      }, 5000)
     }
   }
 
@@ -98,12 +86,11 @@ const App = () => {
     await blogService.remove(id, user)
     setBlogs(blogs.filter((blog) => blog.id !== id))
   }
-  //<Notification message={notificationMessage} />
 
   return (
     <div>
       <h2>blogs</h2>
-      <RNotification />
+      <Notification message={notificationMessage} />
       {user === null ? (
         loginForm()
       ) : (
