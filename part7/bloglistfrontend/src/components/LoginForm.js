@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import BlogList from './BlogList'
 import BlogForm from './BlogForm'
@@ -10,20 +10,14 @@ import {
 import UserList from './UserList'
 import User from './User'
 import BlogSingle from './BlogSingle'
-import { Route, Routes, Link } from 'react-router-dom'
+import { Route, Routes, Link, useNavigate } from 'react-router-dom'
+import { useField } from '../hooks'
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const username = useField('text')
+  const password = useField('password')
   const dispatch = useDispatch()
-
-  const handleNameChange = (event) => {
-    setUsername(event.target.value)
-  }
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
-  }
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(initializeLogin())
@@ -34,14 +28,15 @@ const LoginForm = () => {
 
   const handleLogin = (event) => {
     event.preventDefault()
-    dispatch(loginUser(username, password))
-    setUsername('')
-    setPassword('')
+    dispatch(loginUser(username.field.value, password.field.value))
+    username.reset()
+    password.reset()
   }
 
   const handleLogout = async (event) => {
     event.preventDefault()
     dispatch(logoutUser())
+    navigate('/')
   }
 
   const padding = {
@@ -55,21 +50,11 @@ const LoginForm = () => {
           <h2>log in to application</h2>
           <div>
             username
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={handleNameChange}
-            />
+            <input {...username.field} />
           </div>
           <div>
             password
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={handlePasswordChange}
-            />
+            <input {...password.field} />
           </div>
           <button type="submit">login</button>
         </form>

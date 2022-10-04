@@ -1,40 +1,35 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import Togglable from './Togglable'
+import { useField } from '../hooks'
 
 const BlogForm = () => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
   const dispatch = useDispatch()
-
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value)
-  }
-
-  const handleAuthorChange = (event) => {
-    setAuthor(event.target.value)
-  }
-
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value)
-  }
 
   const addBlog = async (event) => {
     event.preventDefault()
     dispatch(
       createBlog({
-        author: author,
-        title: title,
-        url: url,
+        author: author.field.value,
+        title: title.field.value,
+        url: url.field.value,
       })
     )
-    dispatch(setNotification([`A new blog ${title} by ${author} added`, 5, 1]))
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    dispatch(
+      setNotification([
+        `A new blog ${title.field.value} by ${author.field.value} added`,
+        5,
+        1,
+      ])
+    )
+    title.reset()
+    author.reset()
+    url.reset()
   }
 
   const blogFormRef = useRef()
@@ -45,30 +40,15 @@ const BlogForm = () => {
         <h2>create new</h2>
         <div>
           title
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={handleTitleChange}
-          />
+          <input {...title.field} />
         </div>
         <div>
           author
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={handleAuthorChange}
-          />
+          <input {...author.field} />
         </div>
         <div>
           url
-          <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={handleUrlChange}
-          />
+          <input {...url.field} />
         </div>
         <button type="submit">create</button>
       </form>
