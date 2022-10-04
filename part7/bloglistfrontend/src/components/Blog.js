@@ -13,7 +13,9 @@ const Blog = ({ user, blog }) => {
   const toggleForm = () => {
     setVisualForm(!visualForm)
   }
-
+  if (!user) {
+    return null
+  }
   const showDelete = blog.user.id.toString() === user[0].id.toString()
 
   const blogStyle = {
@@ -50,7 +52,7 @@ const Blog = ({ user, blog }) => {
         )}
       </div>
       <div style={Object.assign({}, blogStyle, shortFormVisible)}>
-        <Link to={`blogs/${blog.id}`}>
+        <Link to={`/blogs/${blog.id}`}>
           {blog.title} {blog.author}
         </Link>
         <button type="submit" onClick={toggleForm}>

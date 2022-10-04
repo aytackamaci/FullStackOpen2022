@@ -6,7 +6,6 @@ import { initializeUsers } from '../reducers/userReducer'
 const User = () => {
   const dispatch = useDispatch()
 
-  console.log('aa')
   const match = useMatch('/users/:id')
   useEffect(() => {
     dispatch(initializeUsers())

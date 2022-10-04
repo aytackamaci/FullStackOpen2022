@@ -9,8 +9,8 @@ import {
 } from '../reducers/loginReducer'
 import UserList from './UserList'
 import User from './User'
-import BlogSingle from './Blog'
-import { Route, Routes } from 'react-router-dom'
+import BlogSingle from './BlogSingle'
+import { Route, Routes, Link } from 'react-router-dom'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -44,6 +44,10 @@ const LoginForm = () => {
     dispatch(logoutUser())
   }
 
+  const padding = {
+    padding: 3,
+  }
+
   return (
     <div>
       {user === null ? (
@@ -71,10 +75,22 @@ const LoginForm = () => {
         </form>
       ) : (
         <div>
-          {user.name} logged-in
-          <button type="submit" onClick={handleLogout}>
-            logout
-          </button>
+          <div className="mydiv">
+            <Link style={padding} to={'/'}>
+              home{' '}
+            </Link>
+            <Link style={padding} to={'/blogs'}>
+              blogs{' '}
+            </Link>
+            <Link style={padding} to={'/users'}>
+              users
+            </Link>
+            {user.name} logged-in
+            <button type="submit" onClick={handleLogout}>
+              logout
+            </button>
+          </div>
+          <h2>blog app</h2>
           <Routes>
             <Route
               exact
@@ -86,10 +102,10 @@ const LoginForm = () => {
                 </div>
               }
             />
-            <Route path="/blogs" element={<UserList />} />
-            <Route path="/users" element={<UserList />} />
             <Route path="/users/:id" element={<User />} />
             <Route path="/blogs/:id" element={<BlogSingle />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/blogs" element={<BlogList />} />
           </Routes>
         </div>
       )}
