@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { saveLikes, deleteBlog } from '../reducers/blogReducer'
+import { Link } from 'react-router-dom'
 
 const Blog = ({ user, blog }) => {
   const [visualForm, setVisualForm] = useState(true)
@@ -13,7 +14,7 @@ const Blog = ({ user, blog }) => {
     setVisualForm(!visualForm)
   }
 
-  const showDelete = blog.user.id.toString() === user.toString()
+  const showDelete = blog.user.id.toString() === user[0].id.toString()
 
   const blogStyle = {
     paddingTop: 10,
@@ -49,7 +50,9 @@ const Blog = ({ user, blog }) => {
         )}
       </div>
       <div style={Object.assign({}, blogStyle, shortFormVisible)}>
-        {blog.title} {blog.author}
+        <Link to={`blogs/${blog.id}`}>
+          {blog.title} {blog.author}
+        </Link>
         <button type="submit" onClick={toggleForm}>
           view
         </button>

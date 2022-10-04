@@ -7,6 +7,10 @@ import {
   initializeLogin,
   logoutUser,
 } from '../reducers/loginReducer'
+import UserList from './UserList'
+import User from './User'
+import BlogSingle from './Blog'
+import { Route, Routes } from 'react-router-dom'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -39,6 +43,7 @@ const LoginForm = () => {
     event.preventDefault()
     dispatch(logoutUser())
   }
+
   return (
     <div>
       {user === null ? (
@@ -70,8 +75,22 @@ const LoginForm = () => {
           <button type="submit" onClick={handleLogout}>
             logout
           </button>
-          <BlogForm />
-          <BlogList />
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <div>
+                  <BlogForm />
+                  <BlogList />
+                </div>
+              }
+            />
+            <Route path="/blogs" element={<UserList />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/users/:id" element={<User />} />
+            <Route path="/blogs/:id" element={<BlogSingle />} />
+          </Routes>
         </div>
       )}
     </div>
