@@ -19,10 +19,21 @@ content-type: application/json
   "likes": 45
 }
 
+###
+POST http://localhost:3003/api/login
+content-type: application/json
+
+{
+  "username": "aytackama",
+  "password": "123456"
+}
+
 
 ###
-POST http://localhost:3001/api/blogs
+POST http://localhost:3003/api/blogs
 content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF5dGFja2FtYSIsImlkIjoiNjI4NTBiYzU0YzA2ZTg4ZmQyOTU3NWEzIiwiaWF0IjoxNjY0OTExNjEyfQ.PFp6mZfVigNTCOwc4t-2RI8GD1XwiNArsD7ifbIX9RA
+
 
 {
   "title": "Spring",
@@ -30,9 +41,17 @@ content-type: application/json
   "url": "zurna",
   "likes": 35
 }
+###
+POST http://localhost:3003/api/blogs/633c89267568f67b6b6ea9da/comments
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF5dGFja2FtYSIsImlkIjoiNjI4NTBiYzU0YzA2ZTg4ZmQyOTU3NWEzIiwiaWF0IjoxNjY0OTExNjEyfQ.PFp6mZfVigNTCOwc4t-2RI8GD1XwiNArsD7ifbIX9RA
+
+{
+  "comment": "second comment"
+}
 
 ####
-PUT http://localhost:3001/api/blogs/627d181cf22ee8bec9aefb67
+PUT http://localhost:3003/api/blogs/627d181cf22ee8bec9aefb67
 content-type: application/json
 
 {

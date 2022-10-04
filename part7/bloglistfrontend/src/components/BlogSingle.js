@@ -29,6 +29,14 @@ const BlogSingle = () => {
     ? blogs.find((blog) => blog.id === match.params.id.toString())
     : null
 
+  if (!blog) {
+    return null
+  }
+
+  if (!user) {
+    return null
+  }
+
   const showDelete = blog.user.id.toString() === user[0].id.toString()
 
   if (!blog) {
@@ -57,6 +65,12 @@ const BlogSingle = () => {
         ) : (
           ''
         )}
+      </div>
+      <div>
+        <h3>comments</h3>
+        {blog.comments.map((comment) => (
+          <li key={comment.id}>{comment.comment}</li>
+        ))}
       </div>
     </div>
   )
