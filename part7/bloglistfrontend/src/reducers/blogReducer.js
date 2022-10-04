@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
 import blogService from '../services/blogs'
 
@@ -17,6 +18,16 @@ const blogSlice = createSlice({
         .map((blog) => (blog.id !== id ? blog : likedBlog))
         .sort((a, b) => (a.likes > b.likes ? -1 : 1))
     },
+    appendComment(state, action) {
+      const comment = {
+        comment: action.payload.comment,
+        id: action.payload.commentid,
+      }
+      const id = action.payload.id
+      const blogToChange = state.find((n) => n.id === id)
+      blogToChange.comments = blogToChange.comments.concat(comment)
+      return state
+    },
     appendBlog(state, action) {
       state.push(action.payload)
     },
@@ -29,7 +40,8 @@ const blogSlice = createSlice({
   },
 })
 
-export const { like, setBlogs, removeBlog, appendBlog } = blogSlice.actions
+export const { like, setBlogs, removeBlog, appendBlog, appendComment } =
+  blogSlice.actions
 
 export const initializeBlogs = () => {
   return async (dispatch) => {
@@ -62,6 +74,22 @@ export const saveLikes = (blog) => {
   return async (dispatch) => {
     const { id } = await blogService.update(votedBlog, blog.id)
     dispatch(like(id))
+  }
+}
+
+export const addComment = (post) => {
+  console.log
+  const newComment = {
+    comment: post.comment,
+  }
+  return async (dispatch) => {
+    const { id } = await blogService.addComment(newComment, post.id)
+    const appendingComment = {
+      comment: post.comment,
+      id: post.id,
+      commentid: id,
+    }
+    dispatch(appendComment(appendingComment))
   }
 }
 

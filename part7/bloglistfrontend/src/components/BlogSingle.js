@@ -1,11 +1,13 @@
 import { useMatch } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { initializeUsers } from '../reducers/userReducer'
 import { initializeBlogs } from '../reducers/blogReducer'
-import { saveLikes, deleteBlog } from '../reducers/blogReducer'
+import { saveLikes, deleteBlog, addComment } from '../reducers/blogReducer'
 
 const BlogSingle = () => {
+  const [comment, setComment] = useState('')
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -23,6 +25,21 @@ const BlogSingle = () => {
   const blogs = useSelector(({ blog }) => {
     return blog
   })
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value)
+  }
+
+  const newComment = async (event) => {
+    event.preventDefault()
+    dispatch(
+      addComment({
+        comment: comment,
+        id: blog.id,
+      })
+    )
+    setComment('')
+  }
 
   const match = useMatch('/blogs/:id')
   const blog = match
@@ -68,6 +85,17 @@ const BlogSingle = () => {
       </div>
       <div>
         <h3>comments</h3>
+        <form onSubmit={newComment}>
+          <div>
+            <input
+              type="text"
+              value={comment}
+              name="Comment"
+              onChange={handleCommentChange}
+            />
+          </div>
+          <button type="submit">add comment</button>
+        </form>
         {blog.comments.map((comment) => (
           <li key={comment.id}>{comment.comment}</li>
         ))}
