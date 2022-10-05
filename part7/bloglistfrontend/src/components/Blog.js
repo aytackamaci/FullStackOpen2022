@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { saveLikes, deleteBlog } from '../reducers/blogReducer'
 import { Link } from 'react-router-dom'
+import { Box, Button } from '@mui/material'
 
 const Blog = ({ user, blog }) => {
   const [visualForm, setVisualForm] = useState(true)
@@ -22,42 +23,66 @@ const Blog = ({ user, blog }) => {
     paddingTop: 10,
     paddingLeft: 2,
     border: 'solid',
-    borderWidth: 1,
+    borderWidth: 3,
     marginBottom: 5,
+    marginRight: 5,
+    marginTop: 5,
   }
 
   return (
     <div>
-      <div style={Object.assign({}, blogStyle, longFormVisible)}>
-        {blog.title} {blog.author}
-        <button type="submit" onClick={toggleForm}>
-          hide
-        </button>
-        <br />
-        {blog.url}
-        <br />
-        likes: {blog.likes}{' '}
-        <button type="submit" onClick={() => dispatch(saveLikes(blog))}>
-          like
-        </button>
-        <br />
-        {blog.user.name}
-        <br />
-        {showDelete ? (
-          <button type="submit" onClick={() => dispatch(deleteBlog(blog))}>
-            delete
-          </button>
-        ) : (
-          ''
-        )}
-      </div>
+      <Box>
+        <div calssName="blog" style={longFormVisible}>
+          {blog.title} {blog.author}
+          <Button
+            variant="contained"
+            size="small"
+            type="submit"
+            onClick={toggleForm}
+          >
+            hide
+          </Button>
+          <br />
+          {blog.url}
+          <br />
+          likes: {blog.likes}{' '}
+          <Button
+            variant="contained"
+            size="small"
+            type="submit"
+            onClick={() => dispatch(saveLikes(blog))}
+          >
+            like
+          </Button>
+          <br />
+          {blog.user.name}
+          <br />
+          {showDelete ? (
+            <Button
+              variant="contained"
+              size="small"
+              type="submit"
+              onClick={() => dispatch(deleteBlog(blog))}
+            >
+              delete
+            </Button>
+          ) : (
+            ''
+          )}
+        </div>
+      </Box>
       <div style={Object.assign({}, blogStyle, shortFormVisible)}>
         <Link to={`/blogs/${blog.id}`}>
           {blog.title} {blog.author}
         </Link>
-        <button type="submit" onClick={toggleForm}>
+        <Button
+          variant="contained"
+          size="small"
+          type="submit"
+          onClick={toggleForm}
+        >
           view
-        </button>
+        </Button>
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import Alert from '@mui/material/Alert'
 
 const RNotification = () => {
   const notification = useSelector(({ notification }) => {
@@ -6,11 +7,11 @@ const RNotification = () => {
   })
   if (notification[0].visibility) {
     if (notification[0].type === 1) {
-      return <div className="success">{notification[0].message}</div>
+      return <Alert severity="success">{notification[0].message} </Alert>
     } else if (notification[0].type === 2) {
-      return <div className="success">{notification[0].message}</div>
+      return <Alert severity="success">{notification[0].message} </Alert>
     } else if (notification[0].type === 3) {
-      return <div className="error">{notification[0].message}</div>
+      return <Alert severity="error">{notification[0].message}</Alert>
     }
   } else {
     return ''
