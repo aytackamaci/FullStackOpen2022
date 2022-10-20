@@ -5,6 +5,8 @@ const Books = (props) => {
   const result = useQuery(ALL_BOOKS)
   const books = result.data.allBooks
 
+  console.log(books)
+
   if (!props.show) {
     return null
   }
